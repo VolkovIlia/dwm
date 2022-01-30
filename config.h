@@ -50,7 +50,7 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ TERMCLASS,   NULL,       NULL,       	    0,            0,           1,         0,        -1 },
+	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
 	{ "fiji",     NULL,	   NULL,       	    0, 		  1,           0,         0,        -1 },
@@ -67,14 +67,14 @@ static int resizehints = 0;    /* 1 means respect size hints in tiled resizals *
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
+	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
 	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
 
 	{ "[@]",	spiral },		/* Fibonacci spiral */
 	{ "[\\]",	dwindle },		/* Decreasing in size right and leftward */
 
 	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
- 	{ "[M]",	monocle },		/* All windows on top of eachother */
+	{ "[M]",	monocle },		/* All windows on top of eachother */
 
 	{ "|M|",	centeredmaster },		/* Master in middle, slaves on sides */
 	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
@@ -204,6 +204,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_semicolon,	shifttag,	{ .i = 1 } },
 	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_apostrophe,	togglesmartgaps,	{0} },
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
 	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 0} },
 
@@ -258,6 +259,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("bright +") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("bright -") },
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
