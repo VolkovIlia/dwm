@@ -137,8 +137,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	/* { MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("") }, */
-	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
+	/* { MODKEY,		        XK_grave,	spawn,	SHCMD("") }, */
+	{ MODKEY,			XK_Escape,	spawn,	SHCMD("dmenuunicode") },
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
 	TAGKEYS(			XK_1,		0)
 	TAGKEYS(			XK_2,		1)
@@ -215,7 +215,7 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("") }, */
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
-	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD(TERMINAL " -e nvim") },
+	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD(TERMINAL " -e nvim -c \"lua require('orgmode').action('agenda.agenda')\"") },
 	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e zk new --no-input -W /home/volk/Library/Journal") },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
