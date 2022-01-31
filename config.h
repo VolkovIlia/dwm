@@ -53,7 +53,10 @@ static const Rule rules[] = {
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
+	{ "fiji",     NULL,	   NULL,       	    0, 		  1,           0,         0,        -1 },
 	{ NULL,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
+        { "qualx",     NULL,	   NULL,       	    0, 		  1,           0,         0,        -1 },
+
 };
 
 /* layout(s) */
@@ -134,8 +137,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	/* { MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("") }, */
-	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
+	/* { MODKEY,		        XK_grave,	spawn,	SHCMD("") }, */
+	{ MODKEY,			XK_Escape,	spawn,	SHCMD("dmenuunicode") },
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
 	TAGKEYS(			XK_1,		0)
 	TAGKEYS(			XK_2,		1)
@@ -187,7 +190,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_a,		togglegaps,	{0} },
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
-	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("dmenuqute") },
 	{ MODKEY,			XK_d,		spawn,          SHCMD("dmenu_run") },
 	{ MODKEY|ShiftMask,		XK_d,		spawn,		SHCMD("passmenu") },
 	{ MODKEY,			XK_f,		togglefullscr,	{0} },
@@ -206,15 +209,15 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 0} },
 
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
-	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD(TERMINAL " -e pdf-fast") },
 	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
 	/* { MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("") }, */
 	/* { MODKEY,			XK_c,		spawn,		SHCMD("") }, */
 	/* { MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("") }, */
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
-	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
-	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e nvim -c VimwikiIndex") },
+	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD(TERMINAL " -e nvim -c \"lua require('orgmode').action('agenda.agenda')\"") },
+	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e zk new --no-input -W /home/volk/Library/Journal") },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
 	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
@@ -223,10 +226,10 @@ static Key keys[] = {
 	{ MODKEY,			XK_period,	spawn,		SHCMD("mpc next") },
 	{ MODKEY|ShiftMask,		XK_period,	spawn,		SHCMD("mpc repeat") },
 
-	{ MODKEY,			XK_Left,	focusmon,	{.i = -1 } },
-	{ MODKEY|ShiftMask,		XK_Left,	tagmon,		{.i = -1 } },
-	{ MODKEY,			XK_Right,	focusmon,	{.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_Right,	tagmon,		{.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_h,		focusmon,	{.i = -1 } },
+	{ MODKEY|ControlMask,		XK_h,		tagmon,		{.i = -1 } },
+	{ MODKEY|ShiftMask,		XK_l,		focusmon,	{.i = +1 } },
+	{ MODKEY|ControlMask,		XK_l,		tagmon,		{.i = +1 } },
 
 	{ MODKEY,			XK_Page_Up,	shiftview,	{ .i = -1 } },
 	{ MODKEY|ShiftMask,		XK_Page_Up,	shifttag,	{ .i = -1 } },
@@ -256,6 +259,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("bright +") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("bright -") },
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
